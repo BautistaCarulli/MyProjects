@@ -1,16 +1,42 @@
-import random as rd
+import random
+import tkinter as tk
+from tkinter import scrolledtext
 
-number = rd.randint(1,20)
-date = rd.randint(23,56)
-print("The result is :" , number, date)
+adjectives = ["brillante", "sombrío", "misterioso", "luminosa", "silencioso"]
+nouns = ["noche", "mar", "bosque", "estrella", "viento"]
+verbs = ["susurra", "grita", "canta", "baila", "fluye"]
+adverbs = ["suavemente", "intensamente", "misteriosamente", "elegantemente", "bruscamente"]
+prepositions = ["en", "sobre", "bajo", "entre", "alrededor de"]
 
-def dice_game():
-    # Generate a number beetwen 1-6, as a dice.
-    return rd.randint(1, 6)
+def generate_poem():
+    lines = []
+    for _ in range(4): 
+        adjective = random.choice(adjectives)
+        noun = random.choice(nouns)
+        verb = random.choice(verbs)
+        adverb = random.choice(adverbs)
+        preposition = random.choice(prepositions)
+        noun2 = random.choice(nouns)
+        
+        line = f"El {adjective} {noun} {verb} {adverb} {preposition} el {noun2}."
+        lines.append(line)
+    
+    return "\n".join(lines)
 
-# game dice and print the result.
-for _ in range(5):
-    result = dice_game()
-    print("Result:", result)
+def display_poem():
+    poem = generate_poem()
+    poem_display.delete('1.0', tk.END)
+    poem_display.insert(tk.INSERT, poem)
 
+root = tk.Tk()
+root.title("Generador de Poesía Aleatoria")
 
+title_label = tk.Label(root, text="Generador de Poesía Aleatoria", font=("Helvetica", 16, "bold"))
+generate_button = tk.Button(root, text="Generar Poema", command=display_poem)
+poem_display = scrolledtext.ScrolledText(root, wrap=tk.WORD, width=40, height=10, font=("Helvetica", 12))
+
+title_label.pack(pady=10)
+generate_button.pack(pady=5)
+poem_display.pack(pady=10)
+
+root.mainloop()
